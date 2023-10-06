@@ -14,7 +14,7 @@ const App = () => {
     const getSubscriptionsVideos = async () => {
         setLoading(true);
         const allVideos = [];
-    
+
         for (let i = 0; i < mySubscriptions.length; i++) {
             const url = serverUrl + `video/${mySubscriptions[i]}/userVideos`;
             const result = await fetch(url, {
@@ -30,22 +30,22 @@ const App = () => {
                 }
             }
         }
-    
+
         setAllVideos(allVideos);
         setLoading(false);
     }
-    
+
     const getAllVideos = async () => {
         setLoading(true);
         if (!user) {
-            setAllVideos(null);
-            fetchAllVideos();
+            await fetchAllVideos(); // Kullanıcı giriş yapmadıysa direkt olarak videoları yükle
         } else {
-            await getSubscriptionsVideos();
-            fetchAllVideos();
+            await getSubscriptionsVideos(); // Kullanıcı giriş yapmışsa abonelik videolarını al
+            await fetchAllVideos(); // Daha sonra tüm videoları yükle
         }
+        setLoading(false);
     }
-    
+
     const fetchAllVideos = async () => {
         const url = serverUrl + `video/getAllVideos/all`;
         const result = await fetch(url, {
@@ -62,10 +62,10 @@ const App = () => {
             }
         }
     }
-    
+
     useEffect(() => {
         getAllVideos();
-    
+
         return () => {
             setAllVideos([]);
         }
