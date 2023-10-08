@@ -20,9 +20,9 @@ const Search = ({ searchParams }) => {
             },
         });
 
+        console.log(result)
         if (result) {
             const resultJson = await result.json();
-            console.log(resultJson)
             if (resultJson.success) {
                 const users = resultJson.result;
                 if (users.length !== 0) {
@@ -57,9 +57,9 @@ const Search = ({ searchParams }) => {
             },
         });
 
+        console.log(result)
         if (result) {
             const resultJson = await result.json();
-            console.log(resultJson)
             if (resultJson.success) {
                 const videos = resultJson.result;
                 if (videos.length !== 0) {
