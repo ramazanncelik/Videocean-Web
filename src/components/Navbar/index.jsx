@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { useAppContext } from '@/contexts/AppContext'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation';
-import { FaHome, FaUser, FaSignInAlt, FaUserPlus, FaSun, FaMoon, FaUserEdit, FaRegBookmark, FaRegThumbsUp, FaFireAlt, FaMusic, FaGamepad, FaTrophy, FaRegFlag } from 'react-icons/fa'
-import { MdClose, MdLockReset, MdLogout } from 'react-icons/md'
+import { FaHome, FaUser, FaSignInAlt, FaUserPlus, FaSun, FaMoon, FaUserEdit, FaRegBookmark, FaRegThumbsUp, FaFireAlt, FaMusic, FaGamepad, FaTrophy, FaRegFlag, FaMailBulk } from 'react-icons/fa'
+import { MdClose, MdLockReset, MdLogout, MdMail } from 'react-icons/md'
 import { useSelector } from 'react-redux';
 import store from "@/store";
 import { openModal } from "@/store/modal";
@@ -12,6 +12,8 @@ import Modal from "@/components/Modal";
 import Subscriptions from "@/components/Subscriptions";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast';
+import { serverUrl } from '@/utils/utils';
 
 const Navbar = () => {
 
@@ -56,6 +58,33 @@ const Navbar = () => {
     const handleSearch = async (e) => {
         if (e.key === "Enter" && searchValue !== "") {
             await router.replace(`search?searchValue=${searchValue}`);
+        }
+    }
+
+    const getEmailVerifyMail = async () => {
+        const url = serverUrl + `auth/getEmailVerifyMail`;
+        const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                to: user.Email,
+                subject: language.includes("tr") ? "E-posta Onaylama - Videocean" : "Email Verify - Videocean",
+                text: language.includes("tr") ? "E-posta adresinizi doğrulamak için aşağıdaki bağlantıya tıklayabilirsiniz" : "You can click on the link below to verify your email address",
+            })
+        });
+
+        if (result) {
+            await toast.success(language.includes("tr") ?
+                "Onaylama Maili E-posta adresinize iletildi"
+                :
+                "Confirmation mail sent to your e-mail address")
+        } else {
+            await toast.success(language.includes("tr") ?
+                "Onaylama Maili E-posta adresinize iletilirken bir hata oluştu. Lütfen tekrar deneyiniz"
+                :
+                "There was an error sending the Confirmation Mail to your e-mail address. Please try again")
         }
     }
 
@@ -144,6 +173,13 @@ const Navbar = () => {
                                                     <span>{language.includes("tr") ? "Profili Düzenle" : "Profile Edit"}</span>
                                                 </Link>
                                             </li>
+                                            {user.EmailVerify !== true &&
+                                                <li>
+                                                    <div onClick={() => getEmailVerifyMail()} className={`p-2 rounded-lg flex flex-row items-center space-x-4 cursor-pointer ${isDarkMode ? "text-white hover:bg-slate-600" : "text-black hover:bg-gray-100"}`}>
+                                                        <MdMail size={20} />
+                                                        <span>{language.includes("tr") ? "E-mail Onayla" : "E-mail Verify"}</span>
+                                                    </div>
+                                                </li>}
                                             <li>
                                                 <button onClick={() => { signout(); toggleMenu() }} href={"/profileEdit"} className={`w-full p-2 rounded-lg flex flex-row items-center space-x-4 ${isDarkMode ? "text-white hover:bg-slate-600" : "text-black hover:bg-gray-100"}`}>
                                                     <MdLogout size={20} />

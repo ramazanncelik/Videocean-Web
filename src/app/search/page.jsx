@@ -27,12 +27,14 @@ const Search = ({ searchParams }) => {
                 if (users.length !== 0) {
                     const list = [];
                     for (let i = 0; i < users.length; i++) {
-                        await list.push({
-                            type: "user",
-                            data: {
-                                ...users[i]
-                            }
-                        });
+                        if (users[i]._id !== user._id) {
+                            await list.push({
+                                type: "user",
+                                data: {
+                                    ...users[i]
+                                }
+                            });
+                        }
                         if (i + 1 === users.length) {
                             await getVideos(list);
                         }
@@ -79,11 +81,6 @@ const Search = ({ searchParams }) => {
     }
 
     useEffect(() => {
-        console.log(searchList)
-    }, [searchList])
-
-
-    useEffect(() => {
         if (searchParams.searchValue) {
             getUsers();
         }
@@ -104,8 +101,7 @@ const Search = ({ searchParams }) => {
                     (searchList.map(searchItem => {
                         return (
                             searchItem.type === "user" ?
-                                (searchItem.data._id !== user._id &&
-                                    <User key={searchItem.data._id} userData={searchItem.data} />)
+                                <User key={searchItem.data._id} userData={searchItem.data} />
                                 :
                                 <Video key={searchItem.data._id} videoData={searchItem.data} />
                         )
