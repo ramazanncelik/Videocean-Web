@@ -20,7 +20,6 @@ const Search = ({ searchParams }) => {
             },
         });
 
-        console.log(result)
         if (result) {
             const resultJson = await result.json();
             if (resultJson.success) {
@@ -57,7 +56,6 @@ const Search = ({ searchParams }) => {
             },
         });
 
-        console.log(result)
         if (result) {
             const resultJson = await result.json();
             if (resultJson.success) {

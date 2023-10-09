@@ -57,7 +57,7 @@ const Navbar = () => {
 
     const handleSearch = async (e) => {
         if (e.key === "Enter" && searchValue !== "") {
-            await router.replace(`search?searchValue=${searchValue}`);
+            await router.replace(`/search?searchValue=${searchValue}`);
         }
     }
 
