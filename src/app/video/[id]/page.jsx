@@ -115,7 +115,7 @@ const VideoPage = ({ params }) => {
                             <div className="w-full p-3 bg-blue-100 text-blue-700 rounded-lg">
                                 {language.includes("tr") ? "Yorum yapmak için lütfen giriş yapınız." : "Please log in to post a comment."}
                             </div>}
-                        <Comments comments={comments} getComments={getComments} />
+                        <Comments comments={comments} getComments={getComments} videoOwnerId={videoInfo.OwnerId} />
                     </div>
 
                 </div>

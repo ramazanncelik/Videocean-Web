@@ -7,7 +7,7 @@ import { serverUrl } from '@/utils/utils';
 import DeleteComment from './Actions/Delete'
 import Actions from './Actions'
 
-const CommentCard = ({ commentId, getComments }) => {
+const CommentCard = ({ commentId, getComments, videoOwnerId }) => {
 
     const { isDarkMode, authToken, language, user } = useAppContext();
     const [commentInfo, setCommentInfo] = useState(null);
@@ -127,7 +127,7 @@ const CommentCard = ({ commentId, getComments }) => {
 
 
                             {authToken &&
-                                (commentInfo.OwnerId === user._id &&
+                                (((commentInfo.OwnerId === user._id) || videoOwnerId === user._id) &&
                                     <DeleteComment commentId={commentId} getComments={getComments} />)}
                         </div>
 

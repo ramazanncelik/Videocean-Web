@@ -99,7 +99,7 @@ const Navbar = () => {
                         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
                     </button>
 
-                    <span className={`text-xl items-center font-semibold ml-2 ${isDarkMode ? "text-white" : "text-black"}`}>Videocean</span>
+                    <Link href={"/"} className={`text-xl items-center font-semibold ml-2 ${isDarkMode ? "text-white" : "text-black"}`}>Videocean</Link>
                 </div>
 
                 <div className='flex-1 items-center justify-center'>

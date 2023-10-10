@@ -97,7 +97,7 @@ export default function ActionsDropDown({ videoId, videoInfo, comments }) {
                 createSave={createSave}
                 deleteSave={deleteSave}
               />
-              {videoInfo.OwnerId === user._id &&
+              {videoInfo.OwnerId !== user._id &&
                 <Complain videoId={videoId} />}
               {videoInfo.OwnerId === user._id &&
                 <Delete videoId={videoId} comments={comments} />}

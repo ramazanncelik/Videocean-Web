@@ -4,7 +4,7 @@ import CustomLoading from "@/components/CustomLoading";
 import { useAppContext } from "@/contexts/AppContext";
 import CommentCard from '@/components/CommentCard/index'
 
-const Comments = ({ comments,getComments }) => {
+const Comments = ({ comments, getComments, videoOwnerId }) => {
 
     const { language, isDarkMode } = useAppContext();
 
@@ -12,12 +12,12 @@ const Comments = ({ comments,getComments }) => {
         return (
             <div className="w-full h-max flex flex-col space-y-3">
                 {comments.length !== 0 ?
-                (comments.map(comment=>{
-                    return(
-                        <CommentCard key={comment._id} commentId={comment._id} getComments={getComments} />
-                    )
-                }))
-            :
+                    (comments.map(comment => {
+                        return (
+                            <CommentCard key={comment._id} commentId={comment._id} getComments={getComments} videoOwnerId={videoOwnerId} />
+                        )
+                    }))
+                    :
                     <div className="w-full p-3 rounded-lg bg-blue-100 text-blue-700">
                         {language.includes("tr") ? "Henüz Yorum Yapılmamış." : "No Comments Yet."}
                     </div>}
